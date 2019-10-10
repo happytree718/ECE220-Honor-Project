@@ -91,7 +91,7 @@ int main(){
   }
 
   for (m = 0; m < a; m++){
-    for (n = 0; n < b; n+){
+    for (n = 0; n < b; n++){
       if (list[m].day = time[n].day){
         if (list[m].start_time > time[n].start_time && list[m].end_time < time[n].end_time){
           day[list[m].day] = list[m].name;
