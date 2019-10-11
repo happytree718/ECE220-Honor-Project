@@ -86,7 +86,7 @@ int main(){
     printf("Start time and end time: \n");
     scanf("%d %d", &time[m].start_time, &time[m].end_time);
     printf("Number of members per slot: \n");
-    scanf("%d", time[m].num_member);
+    scanf("%d", &time[m].num_member);
     time[m].filled = 0;
   }
 
