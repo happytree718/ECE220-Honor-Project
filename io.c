@@ -15,7 +15,7 @@ typedef struct timetable
 }agenda;
 
 typedef struct worker{
-  char* name;
+  char name[10];
   int day;
   int start_time;
   int end_time;
@@ -50,7 +50,7 @@ int main(){
   day[6].day = "Saturday";
   day[0].day = "Sunday";
 
-  int m, n, j, k;
+  int m, n, i, j, k;
   //initial all the strings to a blank space
   for(m = 0; m <= 6; m++){
     for(n = 0; n <= 27; n++){
@@ -65,11 +65,16 @@ int main(){
   mem list[a];
   printf("Please input members' name and availability as instructed\n");
   for (m = 0; m < a; m++){
-    printf("Name: ");
+    printf("Name: \n");
+   // for(i = 0; list[m].name[i] != "\n"; i++){
+   //   scanf("%c ", &list[m].name[i]);
+   // }
     scanf("%s", list[m].name);
+    //printf("%s", list[m].name);
+    //fgets(list[m].name, 10, stdin);
     printf("What day? ('0' for Sunday ~ '6' for Sunday)\n");
     scanf("%d", &list[m].day);
-    printf("Start time and end time: ");
+    printf("Start time and end time: \n");
     scanf("%d %d", &list[m].start_time, &list[m].end_time);
     list[m].availability = 1;
   }
@@ -86,15 +91,22 @@ int main(){
     printf("Start time and end time: \n");
     scanf("%d %d", &time[m].start_time, &time[m].end_time);
     printf("Number of members per slot: \n");
-    scanf("%d", time[m].num_member);
+    scanf("%d", &time[m].num_member);
     time[m].filled = 0;
   }
 
   for (m = 0; m < a; m++){
+    //printf("1");
     for (n = 0; n < b; n++){
-      if (list[m].day = time[n].day){
-        if (list[m].start_time > time[n].start_time && list[m].end_time < time[n].end_time){
-          day[list[m].day] = list[m].name;
+      //printf("2");
+      if (list[m].day == time[n].day){
+        //printf("day checked\n");
+        if (list[m].start_time <= time[n].start_time && list[m].end_time >= time[n].end_time){
+          //printf("time checked");
+          for(i = start_time_to_index(time[n].start_time); i <= end_time_to_index(time[n].end_time); i++ ){
+            //printf("FOUND\n");
+            day[list[m].day].time[i] = list[m].name;
+	        }
         }
       }
     }
@@ -152,7 +164,7 @@ int min(int n){
 }
 
 int start_time_to_index(int n){
-  if (n % 100 = 0)
+  if (n % 100 == 0)
     return 2 * (n / 100 - 8);
   else if (n % 100 <= 30)
     return 2 * (n / 100 - 8) + 1;
