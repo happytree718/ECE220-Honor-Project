@@ -1,45 +1,21 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include "print.h"
+# include "io.h"
 
 
-typedef struct timetable
-{
-  char *day;
-  int start_time;
-  int end_time;
-  char *time[28];
-  /* from 8am to 10pm, each array represent the person for this
-   * half-hour period
-   */
-}agenda;
-
-typedef struct worker{
-  char name[10];
-  int day;
-  int start_time;
-  int end_time;
-  int availability;
-}mem;
-
-typedef struct timeslot{
-  int day;
-  int start_time;
-  int end_time;
-  int num_member;
-  int filled;
-}slot;
-
-int hour(int n);
-int min(int n);
-int start_time_to_index(int n);
-int end_time_to_index(int n);
-void line();
-void fence();
-
+void stop_everything(int sig){
+printf("\n********************************************************************************************\n");
+printf("You have successfully left the program.\n");
+printf("Please type \033[0;32mmake\033[0m and then type \033[0;32m./io\033[0m to restart the program\n");
+printf("See you later!\n");
+printf("********************************************************************************************\n");
+exit(1);
+}
 
 int main(){
-
+  signal(SIGINT, stop_everything);
   agenda day[7];    //set up an array of struct for each day
   //set up initial value for each struct
   day[1].day = "Monday";
@@ -50,7 +26,7 @@ int main(){
   day[6].day = "Saturday";
   day[0].day = "Sunday";
 
-  int m, n, i, j, k;
+  int m, n, i;
   //initial all the strings to a blank space
   for(m = 0; m <= 6; m++){
     for(n = 0; n <= 27; n++){
@@ -111,56 +87,10 @@ int main(){
       }
     }
   }
-  //testing input
-  //day[1].time[3] = "James";
-  //day[1].time[4] = "James";
-  //day[1].time[5] = "James";
-  //day[3].time[4] = "Sam";
-  //day[3].time[5] = "Sam";
-  //testing part end
 
-  // output table
-  for(j = 0; j <= 28; j++){
-    //printf("j = %d\n",j);
-    line();
-    for(k = 0; k <= 7; k++){
-      //printf("k = %d\n",k);
-      fence();
-      switch (k) {
-        case 0:
-          if (j == 0)
-            printf(" time\\day ");
-          else
-            printf("%4d: %d0  ", hour(j-1), min(j-1));
-          break;
-        default:
-          switch(j){
-          case 0:
-            printf("%10s", day[k-1].day);
-            break;
-          default:
-	          printf("\033[0;34m");//set printing color to be blue
-            printf("%10s", day[k-1].time[j-1]);
-	          printf("\033[0m");//free setting
-        }
-      }
-    }
-    fence();
-    printf("\n");
-  }
-  line();
+  print_table(day);
+
   return 0;
-}
-
-int hour(int n){
-  return n/2 + 8;
-}
-
-int min(int n){
-  if (n % 2 == 1)
-    return 3;
-  else
-    return 0;
 }
 
 int start_time_to_index(int n){
@@ -177,14 +107,4 @@ int end_time_to_index(int n){
     return 2 * (n / 100 - 8) - 1;
   else
     return 2 * (n / 100 - 8);
-}
-
-//feed a line of intersections between each row
-void line(){
-  printf("-----------------------------------------------------------------------------------------\n");
-}
-
-//feed a line to set apart columns
-void fence(){
-  printf("|");
 }
