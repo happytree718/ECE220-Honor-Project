@@ -3,7 +3,7 @@
  *
  */
 typedef struct worker{
-  char name[10];
+  char *name;
   int day;
   int start_time;
   int end_time;
