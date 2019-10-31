@@ -28,9 +28,9 @@ void print_table( agenda *array){
             printf("\033[0;34m");//set printing color to be blue
             printf("%10s", array[k-1].time[j-1]);
             printf("\033[0m");//free setting
-        }
+          }
       }
-    }
+    } 
     fence();
     printf("\n");
   }

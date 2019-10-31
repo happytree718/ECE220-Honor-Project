@@ -16,7 +16,9 @@ exit(1);
 
 int main(){
   signal(SIGINT, stop_everything);
-  agenda day[7];    //set up an array of struct for each day
+  
+  //set up an array of struct for each day
+  agenda day[7];    
   //set up initial value for each struct
   day[1].day = "Monday";
   day[2].day = "Tuesday";
@@ -27,7 +29,7 @@ int main(){
   day[0].day = "Sunday";
 
   int m, n, i;
-  //initial all the strings to a blank space
+  //initial all the strings to dashes
   for(m = 0; m <= 6; m++){
     for(n = 0; n <= 27; n++){
       day[m].time[n] = "-----";
@@ -42,12 +44,7 @@ int main(){
   printf("Please input members' name and availability as instructed\n");
   for (m = 0; m < a; m++){
     printf("Name: \n");
-   // for(i = 0; list[m].name[i] != "\n"; i++){
-   //   scanf("%c ", &list[m].name[i]);
-   // }
     scanf("%s", list[m].name);
-    //printf("%s", list[m].name);
-    //fgets(list[m].name, 10, stdin);
     printf("What day? ('0' for Sunday ~ '6' for Sunday)\n");
     scanf("%d", &list[m].day);
     printf("Start time and end time: \n");
