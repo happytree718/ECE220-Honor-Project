@@ -1,4 +1,6 @@
-#include <signal.h>
+# include <signal.h>
+
+typedef struct timeperiod period;
 
 typedef struct timeperiod{
   int day;

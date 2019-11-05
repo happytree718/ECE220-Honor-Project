@@ -16,9 +16,9 @@ exit(1);
 
 int main(){
   signal(SIGINT, stop_everything);
-  
+
   //set up an array of struct for each day
-  agenda day[7];    
+  agenda day[7];
   //set up initial value for each struct
   day[1].day = "Monday";
   day[2].day = "Tuesday";
@@ -28,37 +28,40 @@ int main(){
   day[6].day = "Saturday";
   day[0].day = "Sunday";
 
-  int m, n, i;
+  int m, n;
   //initial all the strings to dashes
   for(m = 0; m <= 6; m++){
     for(n = 0; n <= 27; n++){
       day[m].time[n] = "-----";
     }
   }
-  int option;
+  int option = 0;
   mem * list;
   slot * time;
-  char * filename;
-  do{
+  char filename[100];
+  while(option != 1 && option != 2){
     printf("Please choose the way to input data :\n");
     printf("1: stdin; 2: file input\n");
     scanf("%d", &option);
-    if (option == 1){  
-      list = member_input();
-      time = timeslot_input();
+    if (option == 1){
+      //list = member_input();
+      //time = timeslot_input();
     }else if (option == 2){
       printf("Please enter the name of the file you want to load member data:\n");
       printf("* Make sure the file is in correct format(similar to the example below)\n");
       printf("2\nN Alex\nT 0 1300 1500\nT 2 0800 0930\nN Beta\nT 3 1530 1640\n");
       scanf("%s", filename);
+      printf("Loading %s\n", filename);
       list = file_member_input(filename);
+      printf("Loading complete.\n");
       printf("Please enter the name of the file you want to load time slot data\n:");
       scanf("%s", filename);
-      slot = file_timeslot_input(filename);
+      time = file_timeslot_input(filename);
+      break;
     }else{
       printf("Invalid choice.\n");
     }
-  }while(option != 1 && option != 2)
+  }
 
 
 
