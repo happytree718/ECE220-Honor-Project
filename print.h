@@ -16,6 +16,9 @@ typedef struct timetable
 void print_table(agenda *array);
 /*
  */
+void file_print_table(agenda *array);
+
+
 int hour(int n);
 /*
  */

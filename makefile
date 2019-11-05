@@ -14,4 +14,4 @@ print.o: print.c
 	$(CC) $(CFLAGS) -c print.c
 
 clean:
-	rm -f main.o io.o print.o honor
+	rm -f main.o io.o print.o honor output_table.txt

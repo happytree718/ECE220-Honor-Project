@@ -51,13 +51,10 @@ int main(){
       printf("* Make sure the file is in correct format(similar to the example below)\n");
       printf("2\nN Alex\nT 0 1300 1500\nT 2 0800 0930\nN Beta\nT 3 1530 1640\n");
       scanf("%s", filename);
-      printf("Loading %s\n", filename);
       list = file_member_input(filename);
-      printf("Loading complete.\n");
       printf("Please enter the name of the file you want to load time slot data\n:");
       scanf("%s", filename);
       time = file_timeslot_input(filename);
-      break;
     }else{
       printf("Invalid choice.\n");
     }
@@ -85,6 +82,7 @@ int main(){
 
   free(list);
   free(time);
+  file_print_table(day);
   print_table(day);
 
   return 0;

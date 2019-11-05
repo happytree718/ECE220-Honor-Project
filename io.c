@@ -49,49 +49,66 @@
 
 mem * file_member_input(char* file){
   FILE * fp = fopen(file, "r");
+  printf("Loading %s ...\n", file);
   period * temp;
   char firstChar;
   int size, i;
   period * slot;
   fscanf(fp, "%d\n", &size);
-  printf("line 57 %d\n", size);
-
+  //printf("line 57 %d\n", size);
   mem * member = (mem *) malloc(size * sizeof(mem));
-  firstChar = fgetc(fp);
-  printf("line 61 %c\n", firstChar);
+  fscanf(fp, "%c ", &firstChar);
+  //printf("line 61 %c\n", firstChar);
 
   for (i = 0; i < size; i++){
-    fgets((member+i)->name, 10, fp);
-    printf("line 65 %s\n", (member+i)->name);
+    fscanf(fp, "%s\n", (member+i)->name);
+    //printf("line 65 %s\n", (member+i)->name);
     (member+i)->time = NULL;
     (member+i)->availability = 1;
     fscanf(fp, "%c ", &firstChar);
-    printf("line 69 %c\n", firstChar);
+    //printf("line 69 %c\n", firstChar);
     while (firstChar == 'T'){
       slot = (period *) malloc(sizeof(period));
       fscanf(fp, "%d %d %d\n", &(slot->day), &(slot->start_time), &(slot->end_time));
-      printf("line 73 %d %d %d\n", (slot->day), (slot->start_time), (slot->end_time));
+      //printf("line 73 %d %d %d\n", (slot->day), (slot->start_time), (slot->end_time));
       temp = (member+i)->time;
       (member+i)->time = slot;
       slot->next = temp;
       fscanf(fp, "%c ", &firstChar);
-      printf("line 78 %c\n", firstChar);
+      //printf("line 78 %c\n", firstChar);
       if (feof(fp)) break;
     }
   }
+  printf("Loading complete.\n");
   fclose(fp);
   return member;
 }
 
 slot * file_timeslot_input(char* file){
+  //printf("In function\n");
   FILE * fp = fopen(file, "r");
+  printf("Loading %s ...\n", file);
+  //printf("IN file\n");
   int i, size;
+  //period * timeslot;
   fscanf(fp, "%d\n", &size);
+  //printf("Line92 %d\n",size);
   slot * slotList = (slot *) malloc(size * sizeof(slot));
+  for(i = 0;i<size;i++){
+    (slotList+i) -> time = malloc(sizeof(period));
+  }
   for (i = 0; i < size; i++){
-    fscanf(fp, "%d %d %d %d\n", &((slotList+i)->time->day), &((slotList+i)->time->start_time), &((slotList+i)->time->end_time), &((slotList+i)->num_member));
+    //printf("IN loop %d\n", i);
+    //timeslot = (period *) malloc(sizeof(period));
+    //fscanf(fp, "%d %d %d %d\n", &(timeslot->day), &(timeslot->start_time), &(timeslot->end_time), &((slotList+i)->num_member));
+    fscanf(fp, "%d %d %d %d\n", &(((slotList+i)->time)->day), &(((slotList+i)->time)->start_time),
+    &(((slotList+i)->time)->end_time), &((slotList+i)->num_member));
+    //(slotList+i)->time = timeslot;
+    //printf("%d %d %d %d\n", ((slotList+i)->time->day), ((slotList+i)->time->start_time),
+    //((slotList+i)->time->end_time), ((slotList+i)->num_member));
     (slotList+i)->filled = 0;
   }
+  printf("Loading complete.\n");
   fclose(fp);
   return slotList;
 }
