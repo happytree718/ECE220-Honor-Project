@@ -46,21 +46,26 @@
 //   return time;
 // }
 
+int mem_list_size, slot_list_size;
 
+/*
+ * This function reads members' availability from file, 
+ * Returns the pointer to an array of mem struct
+ */
 mem * file_member_input(char* file){
   FILE * fp = fopen(file, "r");
   printf("Loading %s ...\n", file);
   period * temp;
   char firstChar;
-  int size, i;
+  int i;
   period * slot;
-  fscanf(fp, "%d\n", &size);
+  fscanf(fp, "%d\n", &mem_list_size);
   //printf("line 57 %d\n", size);
-  mem * member = (mem *) malloc(size * sizeof(mem));
+  mem * member = (mem *) malloc(mem_list_size * sizeof(mem));
   fscanf(fp, "%c ", &firstChar);
   //printf("line 61 %c\n", firstChar);
 
-  for (i = 0; i < size; i++){
+  for (i = 0; i < mem_list_size; i++){
     fscanf(fp, "%s\n", (member+i)->name);
     //printf("line 65 %s\n", (member+i)->name);
     (member+i)->time = NULL;
@@ -84,20 +89,25 @@ mem * file_member_input(char* file){
   return member;
 }
 
+
+/*
+ * This function reads time slots from file, 
+ * Returns the pointer to an array of slots
+ */
 slot * file_timeslot_input(char* file){
   //printf("In function\n");
   FILE * fp = fopen(file, "r");
   printf("Loading %s ...\n", file);
   //printf("IN file\n");
-  int i, size;
+  int i;
   //period * timeslot;
-  fscanf(fp, "%d\n", &size);
+  fscanf(fp, "%d\n", &slot_list_size);
   //printf("Line92 %d\n",size);
-  slot * slotList = (slot *) malloc(size * sizeof(slot));
-  for(i = 0;i<size;i++){
+  slot * slotList = (slot *) malloc(slot_list_size * sizeof(slot));
+  for(i = 0;i<slot_list_size;i++){
     (slotList+i) -> time = malloc(sizeof(period));
   }
-  for (i = 0; i < size; i++){
+  for (i = 0; i < slot_list_size; i++){
     //printf("IN loop %d\n", i);
     //timeslot = (period *) malloc(sizeof(period));
     //fscanf(fp, "%d %d %d %d\n", &(timeslot->day), &(timeslot->start_time), &(timeslot->end_time), &((slotList+i)->num_member));
@@ -128,3 +138,35 @@ int end_time_to_index(int n){
   else
     return 2 * (n / 100 - 8);
 }
+
+/*
+ * This function frees all allocated space in the mem struct array
+ */
+ void destroy_mem_list(mem * ptr){
+  int i;
+  period * curr, * tmp;
+  for (i = mem_list_size - 1; i >= 0; i--){
+    curr = (ptr + i)->time;
+    while(curr != NULL){
+      tmp = curr;
+      curr = curr->next;
+      free(tmp);
+    }
+    printf("free ptr[%d]\n", i);
+  }
+  free(ptr);
+  printf("Clear members' info complete\n");
+}
+
+/*
+ * This function frees all allocated space in the timeslot array
+ */
+void destroy_slot_list(slot * ptr){
+  int i;
+  for (i = slot_list_size - 1; i >= 0; i--){
+    free((ptr+i)->time);
+  }
+  free(ptr);
+  printf("Clear timeslot array complete\n");
+}
+

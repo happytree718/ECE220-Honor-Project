@@ -37,3 +37,5 @@ mem * member_input();
 slot * timeslot_input();
 mem * file_member_input(char* file);
 slot * file_timeslot_input(char* file);
+void destroy_mem_list(mem * ptr);
+void destroy_slot_list(slot * ptr);

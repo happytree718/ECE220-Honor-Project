@@ -35,30 +35,31 @@ int main(){
       day[m].time[n] = "-----";
     }
   }
-  int option = 0;
+  // int option = 0;
   mem * list;
   slot * time;
   char filename[100];
-  while(option != 1 && option != 2){
-    printf("Please choose the way to input data :\n");
-    printf("1: stdin; 2: file input\n");
-    scanf("%d", &option);
-    if (option == 1){
-      //list = member_input();
-      //time = timeslot_input();
-    }else if (option == 2){
-      printf("Please enter the name of the file you want to load member data:\n");
+  //while(option != 1 && option != 2){
+  //  printf("Please choose the way to input data :\n");
+    // printf("1: stdin; 2: file input\n");
+    // scanf("%d", &option);
+    // if (option == 1){
+    //   //list = member_input();
+    //   //time = timeslot_input();
+    // }else if (option == 2){
+      
       printf("* Make sure the file is in correct format(similar to the example below)\n");
       printf("2\nN Alex\nT 0 1300 1500\nT 2 0800 0930\nN Beta\nT 3 1530 1640\n");
+      printf("Please enter the name of the file you want to load member data:\n");
       scanf("%s", filename);
       list = file_member_input(filename);
       printf("Please enter the name of the file you want to load time slot data\n:");
       scanf("%s", filename);
       time = file_timeslot_input(filename);
-    }else{
-      printf("Invalid choice.\n");
-    }
-  }
+  //   }else{
+  //     printf("Invalid choice.\n");
+  //   }
+  // }
 
 
 
@@ -80,8 +81,8 @@ int main(){
   //   }
   // }
 
-  free(list);
-  free(time);
+  destroy_mem_list(list);
+  destroy_slot_list(time);
   file_print_table(day);
   print_table(day);
 
