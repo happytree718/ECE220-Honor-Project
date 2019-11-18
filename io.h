@@ -25,6 +25,7 @@ typedef struct timeslot{
   period * time;
   int num_member;
   int filled;
+  int fit_index[100];
 }slot;
 
 /*
@@ -39,3 +40,5 @@ mem * file_member_input(char* file);
 slot * file_timeslot_input(char* file);
 void destroy_mem_list(mem * ptr);
 void destroy_slot_list(slot * ptr);
+void find_match_member(slot * slot, mem * list);
+int check_possible_schedule(slot * slot);

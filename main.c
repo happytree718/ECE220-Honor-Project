@@ -61,8 +61,15 @@ int main(){
   //   }
   // }
 
-
-
+  find_match_member(time, list);
+  if (check_possible_schedule(time)){
+    
+  }else{
+    printf("Sorry, it is impossible to generate the schedule based on the gicen information.\n");
+    destroy_mem_list(list);
+    destroy_slot_list(time);
+    return 0;
+  }
 
   // for (m = 0; m < a; m++){
   //   //printf("1");

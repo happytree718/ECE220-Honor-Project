@@ -163,10 +163,49 @@ int end_time_to_index(int n){
  */
 void destroy_slot_list(slot * ptr){
   int i;
-  for (i = slot_list_size - 1; i >= 0; i--){
+  for (i = slot_list_size - 1; i >= 0; i--)
     free((ptr+i)->time);
-  }
   free(ptr);
   printf("Clear timeslot array complete\n");
 }
+
+/*
+ * This function finds all matched members for every timeslot
+ */
+void find_match_member(slot * slot, mem * list){
+  int i, j, k;
+  int day, start, end;
+  period * curr;
+  for (i = 0; i < slot_list_size; i++){
+    k = 0;
+    day = (slot + i)->time->day;
+    start = (slot + i)->time->start_time;
+    end = (slot + i)->time->end_time;
+    for (j = 0;j < mem_list_size; j ++){
+      curr = (list + j)->time;
+      while (curr != NULL){
+        if (day == curr->day && start >= curr->start_time && end <= curr->end_time){
+          (slot + i)->fit_index[k] = j + 1;
+          k++;
+          break;
+        }
+        curr = curr->next;
+      }
+    }
+  }
+}
+
+/* 
+ * This function checks whether it is possible to generate a schedule
+ * by checking if each timeslot has some matched members
+ * Return 0 is impossible to generate a schedule, 1 otherwise
+ */
+int check_possible_schedule(slot * slot){
+  int i;
+  for(i = 0; i < slot_list_size; i++)
+    if ((slot+i)->fit_index[0] == 0)
+      return 0;
+  return 1;
+}
+
 
