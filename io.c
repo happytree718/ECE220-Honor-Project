@@ -156,7 +156,7 @@ void print_mem_list(mem * mem){
   }
   return;
 }
-
+// This function prints the slot list.
 void print_slot_list(slot * slot){
   int i = 0;
   printf("The following is the slot list:\n")
@@ -252,10 +252,23 @@ int GenarateSchedule(slot * slot, int * nth, mem * member){
       if (GenarateSchedule(slot++, nth, member) == 1) return 1;
       else{
         slot->filled = 0;
-        *nth = *nth - 1;
+        *nth = *nth - 1;  
       }
     }
   }
   return 0; 
 }
 
+void assign_table(agenda * day, slot * slot, mem * list){
+  int i = 0, j = 0;
+  int day, start, end;
+  for(; i < slot_list_size; i++){
+    start = start_time_to_index((slot+i)->time->start_time);
+    start = start_time_to_index((slot+i)->time->end_time);
+    day = (slot+i)->time->day;
+    for(j = start; j <= end; j++){
+      day[day].time[j] = list[(slot+i)->filled-1]->name;
+    }
+  }
+  return;  
+}

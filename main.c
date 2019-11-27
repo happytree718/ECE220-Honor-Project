@@ -38,7 +38,7 @@ int main(){
   // int option = 0;
   mem * list;
   slot * time;
-  char filename[100];
+  char filename[30];
   //while(option != 1 && option != 2){
   //  printf("Please choose the way to input data :\n");
     // printf("1: stdin; 2: file input\n");

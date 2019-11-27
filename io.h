@@ -48,3 +48,4 @@ void destroy_slot_list(slot * ptr);
 void find_match_member(slot * slot, mem * list);
 int check_possible_schedule(slot * slot);
 int GenarateSchedule(slot * slot, int * nth, mem * member);
+void assign_table(agenda * day, slot * slot, mem * list);
