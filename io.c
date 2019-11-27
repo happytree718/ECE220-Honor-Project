@@ -140,6 +140,33 @@ int end_time_to_index(int n){
 }
 
 /*
+ * This function prints the member list
+ */
+void print_mem_list(mem * mem){
+  int i = 0;
+  period * time;
+  printf("The following is the member list:\n");
+  for (; i < mem_list_size; i++){
+    printf("%s\n",mem[i].name);
+    time = mem[i].time;
+    while (time != NULL){
+      printf("Day%d: &d-%d\n", time->day, time->start_time, time->end_time);
+      time = time->next;
+    }
+  }
+  return;
+}
+
+void print_slot_list(slot * slot){
+  int i = 0;
+  printf("The following is the slot list:\n")
+  for (; i < slot_list_size; i++){
+    printf("Day%d: &d-%d\n", (slot+i)->day, (slot+i)->start_time, (slot+i)->end_time);
+  }
+  return;
+}
+
+/*
  * This function frees all allocated space in the mem struct array
  */
  void destroy_mem_list(mem * ptr){
@@ -152,7 +179,7 @@ int end_time_to_index(int n){
       curr = curr->next;
       free(tmp);
     }
-    printf("free ptr[%d]\n", i);
+    //printf("free ptr[%d]\n", i);
   }
   free(ptr);
   printf("Clear members' info complete\n");
@@ -171,6 +198,8 @@ void destroy_slot_list(slot * ptr){
 
 /*
  * This function finds all matched members for every timeslot
+ * and stores in fit_index with (index number +1) so that 
+ * we avoid ambuguity between 0 index and no fit.
  */
 void find_match_member(slot * slot, mem * list){
   int i, j, k;
@@ -203,9 +232,30 @@ void find_match_member(slot * slot, mem * list){
 int check_possible_schedule(slot * slot){
   int i;
   for(i = 0; i < slot_list_size; i++)
-    if ((slot+i)->fit_index[0] == 0)
-      return 0;
+    if ((slot+i)->fit_index[0] == 0) return 0;
   return 1;
 }
 
+/*
+ * This function uses back-tracking recursion to match each 
+ * time slot with a member. 
+ */
+int GenarateSchedule(slot * slot, int * nth, mem * member){
+  int flag = 0, i = 0;
+  for (; slot->fit_index[i] != 0; i++){
+    if (member[(slot->fit_index[i]-1)].availability == 1){
+      slot->filled = slot->fit_index[i];
+       // base case
+      if (*nth == slot_list_size) return 1;
+      // recursive case
+      *nth = *nth + 1;
+      if (GenarateSchedule(slot++, nth, member) == 1) return 1;
+      else{
+        slot->filled = 0;
+        *nth = *nth - 1;
+      }
+    }
+  }
+  return 0; 
+}
 
