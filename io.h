@@ -16,6 +16,7 @@ typedef struct worker{
   char name[10];
   period * time;
   int availability;
+  int index;
 }mem;
 
 /*
@@ -26,6 +27,7 @@ typedef struct timeslot{
   int num_member;
   int filled;
   int fit_index[100];
+  int final_index;
 }slot;
 
 /*

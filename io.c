@@ -70,6 +70,7 @@ mem * file_member_input(char* file){
     //printf("line 65 %s\n", (member+i)->name);
     (member+i)->time = NULL;
     (member+i)->availability = 1;
+    (member+i)->index = i;
     fscanf(fp, "%c ", &firstChar);
     //printf("line 69 %c\n", firstChar);
     while (firstChar == 'T'){
@@ -152,10 +153,10 @@ int end_time_to_index(int n){
       curr = curr->next;
       free(tmp);
     }
-    printf("free ptr[%d]\n", i);
+    //printf("free ptr[%d]\n", i);
   }
   free(ptr);
-  printf("Clear members' info complete\n");
+  printf("Clear members' info...\n");
 }
 
 /*
@@ -166,7 +167,7 @@ void destroy_slot_list(slot * ptr){
   for (i = slot_list_size - 1; i >= 0; i--)
     free((ptr+i)->time);
   free(ptr);
-  printf("Clear timeslot array complete\n");
+  printf("Clear timeslot array...\n");
 }
 
 /*
@@ -208,4 +209,18 @@ int check_possible_schedule(slot * slot){
   return 1;
 }
 
+/*
+ * This function uses back-tracking recursion to generate a  
+ * possible schedule
+ */
+int generator(slot * slot, mem * list){
+  if (slot + 1 == NULL){ 
+    if(list->availability == 1){
+      slot->final_index = list->index;
+      return 1;
+    }else{
+      return 0;
+    }
+  }
 
+}

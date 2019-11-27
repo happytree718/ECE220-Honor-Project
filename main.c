@@ -47,9 +47,10 @@ int main(){
     //   //list = member_input();
     //   //time = timeslot_input();
     // }else if (option == 2){
-      
-      printf("* Make sure the file is in correct format(similar to the example below)\n");
+      printf("WELCOME TO THE SCHEDULE GENERATOR!");
+      printf("Please make sure the file is in correct format(similar to the example below)\n");
       printf("2\nN Alex\nT 0 1300 1500\nT 2 0800 0930\nN Beta\nT 3 1530 1640\n");
+      printf("3\n0 1200 1400 1\n2 0824 1322 3\n5 0930 1030 1\n");
       printf("Please enter the name of the file you want to load member data:\n");
       scanf("%s", filename);
       list = file_member_input(filename);
@@ -65,7 +66,7 @@ int main(){
   if (check_possible_schedule(time)){
     
   }else{
-    printf("Sorry, it is impossible to generate the schedule based on the gicen information.\n");
+    printf("Sorry, it is impossible to generate the schedule based on the given information.\n");
     destroy_mem_list(list);
     destroy_slot_list(time);
     return 0;
