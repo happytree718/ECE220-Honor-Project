@@ -1,0 +1,18 @@
+WELCOME TO THE SCHEDULE GENERATOR!Please make sure the file is in correct format(similar to the example below)
+2
+N Alex
+T 0 1300 1500
+T 2 0800 0930
+N Beta
+T 3 1530 1640
+3
+0 1200 1400 1
+2 0824 1322 3
+5 0930 1030 1
+Please enter the name of the file you want to load member data:
+
+********************************************************************************************
+You have successfully left the program.
+Please type [0;32mmake[0m and then type [0;32m./main[0m to restart the program
+See you later!
+********************************************************************************************

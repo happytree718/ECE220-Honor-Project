@@ -18,27 +18,33 @@ int main(){
   signal(SIGINT, stop_everything);
 
   //set up an array of struct for each day
-  agenda day[7];
+  
+  agenda* day = malloc(7 * sizeof(agenda));
   //set up initial value for each struct
-  day[1].day = "Monday";
-  day[2].day = "Tuesday";
-  day[3].day = "Wednesday";
-  day[4].day = "Thursday";
-  day[5].day = "Friday";
-  day[6].day = "Saturday";
-  day[0].day = "Sunday";
+
+ 
 
   int m, n;
   //initial all the strings to dashes
   for(m = 0; m <= 6; m++){
+    //day[m].day = 
+    //day[m].time = malloc(28*sizeof(char*));
     for(n = 0; n <= 27; n++){
-      day[m].time[n] = "-----";
+      day[m].time[n] = (char*)malloc(10*sizeof(char));
+      strcpy(day[m].time[n], "-----");
     }
   }
+  strcpy(day[1].day, "Monday");
+  strcpy(day[2].day, "Tuesday");
+  strcpy(day[3].day, "Wednesday");
+  strcpy(day[4].day, "Thursday");
+  strcpy(day[5].day, "Friday");
+  strcpy(day[6].day, "Saturday");
+  strcpy(day[0].day, "Sunday");
   // int option = 0;
   mem * list;
   slot * time;
-  char filename[100];
+  char filename[30];
   //while(option != 1 && option != 2){
   //  printf("Please choose the way to input data :\n");
     // printf("1: stdin; 2: file input\n");
@@ -61,10 +67,16 @@ int main(){
   //     printf("Invalid choice.\n");
   //   }
   // }
+  printf("Summarize input info:\n");
+  print_mem_list(list);
+  print_slot_list(time);
 
   find_match_member(time, list);
-  if (check_possible_schedule(time)){
-    
+  int nth = 0;
+  if (check_possible_schedule(time) && GenerateSchedule(time, &nth, list)){
+    printf("Generating schedule...\n");
+    //if (GenerateSchedule(time, &nth, list))
+      assign_table(day, time, list);
   }else{
     printf("Sorry, it is impossible to generate the schedule based on the given information.\n");
     destroy_mem_list(list);

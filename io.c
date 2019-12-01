@@ -8,7 +8,7 @@
 // mem * member_input(){
 //   // input for member info
 //   int m;
-//   printf("Please enter the number of total members:\n");
+//   // printf("Please enter the number of total members:\n");
 //   scanf("%d", &m);
 //   const int a = m;
 //   mem * list = (mem *)malloc(a * sizeof(mem));
@@ -141,6 +141,33 @@ int end_time_to_index(int n){
 }
 
 /*
+ * This function prints the member list
+ */
+void print_mem_list(mem * mem){
+  int i = 0;
+  period * time;
+  printf("The following is the member list:\n");
+  for (; i < mem_list_size; i++){
+    printf("%s\n",mem[i].name);
+    time = mem[i].time;
+    while (time != NULL){
+      printf("Day%d: %d-%d\n", time->day, time->start_time, time->end_time);
+      time = time->next;
+    }
+  }
+  return;
+}
+// This function prints the slot list.
+void print_slot_list(slot * slot){
+  int i = 0;
+  printf("The following is the slot list:\n");
+  for (; i < slot_list_size; i++){
+    printf("Day%d: %d-%d\n", (slot+i)->time->day, (slot+i)->time->start_time, (slot+i)->time->end_time);
+  }
+  return;
+}
+
+/*
  * This function frees all allocated space in the mem struct array
  */
  void destroy_mem_list(mem * ptr){
@@ -172,6 +199,8 @@ void destroy_slot_list(slot * ptr){
 
 /*
  * This function finds all matched members for every timeslot
+ * and stores in fit_index with (index number +1) so that 
+ * we avoid ambuguity between 0 index and no fit.
  */
 void find_match_member(slot * slot, mem * list){
   int i, j, k;
@@ -182,11 +211,13 @@ void find_match_member(slot * slot, mem * list){
     day = (slot + i)->time->day;
     start = (slot + i)->time->start_time;
     end = (slot + i)->time->end_time;
+    printf("i = %d\n", i);
     for (j = 0;j < mem_list_size; j ++){
       curr = (list + j)->time;
       while (curr != NULL){
         if (day == curr->day && start >= curr->start_time && end <= curr->end_time){
           (slot + i)->fit_index[k] = j + 1;
+          printf("%d\n", (slot + i)->fit_index[k]);
           k++;
           break;
         }
@@ -204,23 +235,54 @@ void find_match_member(slot * slot, mem * list){
 int check_possible_schedule(slot * slot){
   int i;
   for(i = 0; i < slot_list_size; i++)
-    if ((slot+i)->fit_index[0] == 0)
-      return 0;
+    if ((slot+i)->fit_index[0] == 0) return 0;
   return 1;
 }
 
 /*
- * This function uses back-tracking recursion to generate a  
- * possible schedule
+ * This function uses back-tracking recursion to match each 
+ * time slot with a member. 
  */
-int generator(slot * slot, mem * list){
-  if (slot + 1 == NULL){ 
-    if(list->availability == 1){
-      slot->final_index = list->index;
-      return 1;
-    }else{
-      return 0;
+int GenerateSchedule(slot * slot, int * nth, mem * member){
+  int i = 0;
+  for (; slot->fit_index[i] != 0; i++){
+    if (member[(slot->fit_index[i]-1)].availability == 1){
+      slot->filled = slot->fit_index[i];
+      member[(slot->fit_index[i]-1)].availability = 0;
+       // base case
+      if (*nth == slot_list_size) return 1;
+      // recursive case
+      *nth = *nth + 1;
+      if (GenerateSchedule(slot++, nth, member)){ 
+        return 1;
+      }else{
+        slot->filled = 0;
+        *nth = *nth - 1;  
+        member[(slot->fit_index[i]-1)].availability = 1;
+      }
     }
   }
+  return 0; 
+}
 
+void assign_table(agenda * day, slot* slot, mem * list){
+  int i = 0, j;
+  int day_, start, end;
+  char name[10];
+  for(; i < slot_list_size; i++){
+    printf("%d\n", (slot+i)->filled);
+    start = start_time_to_index((slot+i)->time->start_time);
+    end = end_time_to_index((slot+i)->time->end_time);
+    day_ = (slot+i)->time->day;
+    strcpy(name, list[(slot+i)->filled-1].name);
+    for(j = start; j <= end; j++){
+      //day[day_].time[j] = list[(slot+i)->filled-1].name;
+      //mem m;
+      //char test[10] =  "abcd";
+      //strcpy(m.name, list[(slot+i)->filled-1].name);
+      strcpy(day[day_].time[j], name);
+      printf("%s\n", day[day_].time[j]);
+    }
+  }
+  return;  
 }
