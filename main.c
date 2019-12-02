@@ -18,7 +18,7 @@ int main(){
   signal(SIGINT, stop_everything);
 
   //set up an array of struct for each day
-  
+  //agenda day[7];
   agenda* day = malloc(7 * sizeof(agenda));
   //set up initial value for each struct
 
@@ -27,8 +27,7 @@ int main(){
   int m, n;
   //initial all the strings to dashes
   for(m = 0; m <= 6; m++){
-    //day[m].day = 
-    //day[m].time = malloc(28*sizeof(char*));
+    //day[m].time = (char**)malloc(28*sizeof(char*));
     for(n = 0; n <= 27; n++){
       day[m].time[n] = (char*)malloc(10*sizeof(char));
       strcpy(day[m].time[n], "-----");
@@ -103,8 +102,18 @@ int main(){
 
   destroy_mem_list(list);
   destroy_slot_list(time);
+  
+  
+
   file_print_table(day);
   print_table(day);
 
+  for(m = 0; m <= 6; m++){     
+    for(n = 0; n <= 27; n++){
+      free(day[m].time[n]);
+    }
+    //free(day[m].time);
+  } 
+  free(day);
   return 0;
 }
