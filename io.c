@@ -211,13 +211,13 @@ void find_match_member(slot * slot, mem * list){
     day = (slot + i)->time->day;
     start = (slot + i)->time->start_time;
     end = (slot + i)->time->end_time;
-    //printf("i = %d\n", i);
+    printf("i = %d\n", i);
     for (j = 0;j < mem_list_size; j ++){
       curr = (list + j)->time;
       while (curr != NULL){
         if (day == curr->day && start >= curr->start_time && end <= curr->end_time){
           (slot + i)->fit_index[k] = j + 1;
-          //printf("%d\n", (slot + i)->fit_index[k]);
+          printf("%d\n", (slot + i)->fit_index[k]);
           k++;
           break;
         }
@@ -245,6 +245,7 @@ int check_possible_schedule(slot * slot){
  */
 int GenerateSchedule(slot * slot, int * nth, mem * member){
   int i = 0;
+  if (*nth >= slot_list_size) return 0;
   for (; slot->fit_index[i] != 0; i++){
     //printf("%d out:%d\n",*nth, i);
     if (member[(slot->fit_index[i]-1)].availability == 1){
