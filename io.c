@@ -18,7 +18,7 @@ mem * member_input(){
   mem_list_size = m;
   while(m >= 0){
     printf("info type identifier:(N/T)\n");
-    scanf("%c", &type);
+    scanf("%c\n", &type);
     if (type == 'N'){
       i++;
       m--;
@@ -28,7 +28,7 @@ mem * member_input(){
     }else if (type == 'T'){
       printf("Available time slot detail:\n");
       time = (period *)malloc(sizeof(period));
-      scanf("%d %d %d", &(time->day), &(time->start_time), &(time->end_time));
+      scanf("%d %d %d\n", &(time->day), &(time->start_time), &(time->end_time));
       time->next = (list+i)->time;
       (list+i)->time = time;
     }
@@ -233,13 +233,13 @@ void find_match_member(slot * slot, mem * list){
     day = (slot + i)->time->day;
     start = (slot + i)->time->start_time;
     end = (slot + i)->time->end_time;
-    printf("i = %d\n", i);
+    printf("slot[%d]: day %d, %d-%d\n", i, day, start, end);
     for (j = 0;j < mem_list_size; j ++){
       curr = (list + j)->time;
       while (curr != NULL){
         if (day == curr->day && start >= curr->start_time && end <= curr->end_time){
           (slot + i)->fit_index[k] = j + 1;
-          printf("%d\n", (slot + i)->fit_index[k]);
+          printf("%s\n", list[(slot + i)->fit_index[k]-1].name);
           k++;
           break;
         }
