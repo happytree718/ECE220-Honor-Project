@@ -234,6 +234,7 @@ void find_match_member(slot * slot, mem * list){
     start = (slot + i)->time->start_time;
     end = (slot + i)->time->end_time;
     printf("slot[%d]: day %d, %d-%d\n", i, day, start, end);
+	printf("matched member:\n");
     for (j = 0;j < mem_list_size; j ++){
       curr = (list + j)->time;
       while (curr != NULL){
