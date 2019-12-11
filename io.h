@@ -9,9 +9,6 @@ typedef struct timeperiod{
   period * next;
 }period;
 
-/*
- *
- */
 typedef struct worker{
   char name[10];
   period * time;
@@ -19,15 +16,11 @@ typedef struct worker{
   int index;
 }mem;
 
-/*
- *
- */
 typedef struct timeslot{
   period * time;
   int num_member;
   int filled;
-  int fit_index[100];
-  int final_index;
+  int fit_index[50];
 }slot;
 
 /*

@@ -8,22 +8,15 @@
 void stop_everything(int sig){
 printf("\n********************************************************************************************\n");
 printf("You have successfully left the program.\n");
-printf("Please type \033[0;32mmake\033[0m and then type \033[0;32m./main\033[0m to restart the program\n");
+printf("Please type \033[0;32mmake\033[0m and then type \033[0;32m./honor\033[0m to restart the program\n");
 printf("See you later!\n");
 printf("********************************************************************************************\n");
 exit(1);
 }
 
-int main(){
-  signal(SIGINT, stop_everything);
-
-  //set up an array of struct for each day
-  //agenda day[7];
+agenda * CreateTable(){
   agenda* day = malloc(7 * sizeof(agenda));
   //set up initial value for each struct
-
- 
-
   int m, n;
   //initial all the strings to dashes
   for(m = 0; m <= 6; m++){
@@ -40,18 +33,35 @@ int main(){
   strcpy(day[5].day, "Friday");
   strcpy(day[6].day, "Saturday");
   strcpy(day[0].day, "Sunday");
-  // int option = 0;
+}
+
+void destroy_table(agenda * day){
+   for(m = 0; m <= 6; m++){     
+    for(n = 0; n <= 27; n++){
+      free(day[m].time[n]);
+    }
+  } 
+  free(day);
+  return;
+}
+
+int main(){
+  signal(SIGINT, stop_everything);
+  agenda * day = CreateTable;
+  //set up an array of struct for each day
+  
+  int option = 0, flag = 0;
   mem * list;
   slot * time;
   char filename[30];
-  //while(option != 1 && option != 2){
-  //  printf("Please choose the way to input data :\n");
-    // printf("1: stdin; 2: file input\n");
-    // scanf("%d", &option);
-    // if (option == 1){
-    //   //list = member_input();
-    //   //time = timeslot_input();
-    // }else if (option == 2){
+  while(option != 1 && option != 2){
+    printf("Please choose the way to input data :\n");
+    printf("1: stdin; 2: file input\n");
+    scanf("%d", &option);
+    if (option == 1){
+      list = member_input();
+      time = timeslot_input();
+    }else if (option == 2){
       printf("WELCOME TO THE SCHEDULE GENERATOR!");
       printf("Please make sure the file is in correct format(similar to the example below)\n");
       printf("2\nN Alex\nT 0 1300 1500\nT 2 0800 0930\nN Beta\nT 3 1530 1640\n");
@@ -62,26 +72,48 @@ int main(){
       printf("Please enter the name of the file you want to load time slot data\n:");
       scanf("%s", filename);
       time = file_timeslot_input(filename);
-  //   }else{
-  //     printf("Invalid choice.\n");
-  //   }
-  // }
-  printf("Summarize input info:\n");
-  print_mem_list(list);
-  print_slot_list(time);
-
-  find_match_member(time, list);
-  int nth = 0;
-  if (check_possible_schedule(time) && GenerateSchedule(time, &nth, list)){
-    printf("Generating schedule...\n");
-    //if (GenerateSchedule(time, &nth, list))
-      assign_table(day, time, list);
-  }else{
-    printf("Sorry, it is impossible to generate the schedule based on the given information.\n");
-    destroy_mem_list(list);
-    destroy_slot_list(time);
-    return 0;
+    }else{
+      printf("Invalid choice.\n");
+    }
   }
+  while (option != 0){
+    printf("Enter the operation you want to conduct");
+    printf("0: Halt the program;\n1: Exhibit loaded input;\n2: Generate Schedule(stored in \"output_table.txt\");\n3: Print generated table;\n");
+    scanf("%d", &option);
+    switch(option){
+      case 0:
+        destroy_mem_list(list);
+        destroy_slot_list(time);
+        destroy_table(day);
+        return 0;
+        break;
+      case 1:
+        printf("Summarize input info:\n");
+        print_mem_list(list);
+        print_slot_list(time);
+        break;
+      case 2:
+        find_match_member(time, list);
+        int nth = 0;
+        if (check_possible_schedule(time) && GenerateSchedule(time, &nth, list)){
+        printf("Generating schedule...\n");
+        //if (GenerateSchedule(time, &nth, list))
+        assign_table(day, time, list);
+        file_print_table(day);
+        }else{
+          printf("Sorry, it is impossible to generate the schedule based on the given information.\n");
+        }
+        break;
+      case 3:
+        print_table(day);
+        break;
+      default:
+        printf("Invalid choice.\n");
+        break;
+    }
+  }
+ 
+  
 
   // for (m = 0; m < a; m++){
   //   //printf("1");
@@ -98,22 +130,6 @@ int main(){
   //       }
   //     }
   //   }
-  // }
-
-  destroy_mem_list(list);
-  destroy_slot_list(time);
-  
-  
-
-  file_print_table(day);
-  print_table(day);
-
-  for(m = 0; m <= 6; m++){     
-    for(n = 0; n <= 27; n++){
-      free(day[m].time[n]);
-    }
-    //free(day[m].time);
-  } 
-  free(day);
+  // } 
   return 0;
 }
