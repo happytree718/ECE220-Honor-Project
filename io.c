@@ -8,9 +8,9 @@ int mem_list_size, slot_list_size;
 
 mem * member_input(){
   // input for member info
-  int m, day, start, end, i = -1;
-  char type, name[10];
-  period * time, tmp;
+  int m, i = -1;
+  char type;
+  period * time;
   printf("Please enter the number of total members:\n");
   scanf("%d", &m);
   //const int a = m;
@@ -19,15 +19,16 @@ mem * member_input(){
   while(m >= 0){
     printf("info type identifier:(N/T)\n");
     scanf("%c", &type);
-    if (type == "N"){
+    if (type == 'N'){
       i++;
       m--;
+      if(m == -1) break;
       printf("Name:\n");
       scanf("%s", (list+i)->name);
-    }else if (type == "T"){
+    }else if (type == 'T'){
       printf("Available time slot detail:\n");
       time = (period *)malloc(sizeof(period));
-      scanf("%d %d %d", time->day, time->start_time, time->end_time);
+      scanf("%d %d %d", &(time->day), &(time->start_time), &(time->end_time));
       time->next = (list+i)->time;
       (list+i)->time = time;
     }
@@ -50,13 +51,14 @@ slot * timeslot_input(){
   int m;
   printf("Please enter the number of total timeslots:\n");
   scanf("%d", &m);
-  m = slot_list_size;
+  slot_list_size = m;
   const int b = m;
   slot * time = (slot *) malloc (b * sizeof(slot));
   printf("Please input time slot info below\n");
   for (m = 0; m < b; m++){
+    (time+m)->time = malloc(sizeof(period));
     printf("What day? ('0' for Sunday ~ '6' for Sunday)\n");
-    scanf("%d", &time[m].time->day);
+    scanf("%d", &((time[m].time)->day));
     printf("Start time and end time: \n");
     scanf("%d %d", &time[m].time->start_time, &time[m].time->end_time);
     printf("Number of members per slot: \n");

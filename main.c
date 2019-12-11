@@ -33,23 +33,26 @@ agenda * CreateTable(){
   strcpy(day[5].day, "Friday");
   strcpy(day[6].day, "Saturday");
   strcpy(day[0].day, "Sunday");
+  return day;
 }
 
 void destroy_table(agenda * day){
-   for(m = 0; m <= 6; m++){     
+  int m, n;
+  for(m = 0; m <= 6; m++){
     for(n = 0; n <= 27; n++){
       free(day[m].time[n]);
     }
-  } 
+  }
   free(day);
+  printf("Clear generated table...\n");
   return;
 }
 
 int main(){
   signal(SIGINT, stop_everything);
-  agenda * day = CreateTable;
+  agenda * day = CreateTable();
   //set up an array of struct for each day
-  
+
   int option = 0, flag = 0;
   mem * list;
   slot * time;
@@ -76,8 +79,8 @@ int main(){
       printf("Invalid choice.\n");
     }
   }
-  while (option != 0){
-    printf("Enter the operation you want to conduct");
+  while (1){
+    printf("\nEnter the operation you want to conduct:\n");
     printf("0: Halt the program;\n1: Exhibit loaded input;\n2: Generate Schedule(stored in \"output_table.txt\");\n3: Print generated table;\n");
     scanf("%d", &option);
     switch(option){
@@ -85,6 +88,7 @@ int main(){
         destroy_mem_list(list);
         destroy_slot_list(time);
         destroy_table(day);
+        printf("\nThe program ends.Thanks for using!\n\n");
         return 0;
         break;
       case 1:
@@ -100,20 +104,24 @@ int main(){
         //if (GenerateSchedule(time, &nth, list))
         assign_table(day, time, list);
         file_print_table(day);
+        flag = 1;
         }else{
           printf("Sorry, it is impossible to generate the schedule based on the given information.\n");
         }
         break;
       case 3:
-        print_table(day);
+        if(flag == 1)
+          print_table(day);
+        else
+          printf("Please generate table first.\n");
         break;
       default:
         printf("Invalid choice.\n");
         break;
     }
   }
- 
-  
+
+
 
   // for (m = 0; m < a; m++){
   //   //printf("1");
@@ -130,6 +138,6 @@ int main(){
   //       }
   //     }
   //   }
-  // } 
+  // }
   return 0;
 }
