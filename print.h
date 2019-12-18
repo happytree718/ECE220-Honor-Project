@@ -4,8 +4,6 @@
 typedef struct timetable
 {
   char day[20];
-  int start_time;
-  int end_time;
   char* time[28];
   /* from 8am to 10pm, each array represent the person for this
    * half-hour period

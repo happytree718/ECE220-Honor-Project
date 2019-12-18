@@ -129,6 +129,7 @@ slot * file_timeslot_input(char* file){
   slot * slotList = (slot *) malloc(slot_list_size * sizeof(slot));
   for(i = 0;i<slot_list_size;i++){
     (slotList+i) -> time = malloc(sizeof(period));
+    //(slotList+i) -> fit_index[50] = {0};
   }
   for (i = 0; i < slot_list_size; i++){
     //printf("IN loop %d\n", i);
