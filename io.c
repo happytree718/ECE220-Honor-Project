@@ -77,7 +77,6 @@ slot * timeslot_input(){
 mem * file_member_input(char* file){
   FILE * fp = fopen(file, "r");
   printf("Loading %s ...\n", file);
-  period * temp;
   char firstChar;
   int i;
   period * slot;
@@ -97,11 +96,10 @@ mem * file_member_input(char* file){
     //printf("line 69 %c\n", firstChar);
     while (firstChar == 'T'){
       slot = (period *) malloc(sizeof(period));
+      slot->next = NULL;
       fscanf(fp, "%d %d %d\n", &(slot->day), &(slot->start_time), &(slot->end_time));
       //printf("line 73 %d %d %d\n", (slot->day), (slot->start_time), (slot->end_time));
-      temp = (member+i)->time;
-      (member+i)->time = slot;
-      slot->next = temp;
+      insert((member+i), slot);
       fscanf(fp, "%c ", &firstChar);
       //printf("line 78 %c\n", firstChar);
       if (feof(fp)) break;
@@ -145,6 +143,29 @@ slot * file_timeslot_input(char* file){
   printf("Loading complete.\n");
   fclose(fp);
   return slotList;
+}
+
+void insert(mem * mem, period * time){
+  if (mem->time == NULL){
+    mem->time = time;
+    return;
+  }
+  period * tmp, * curr = mem->time;
+  int day = time->day, start = time->start_time;
+  int cd = curr->day, cs = curr->start_time;
+  if ((cd > day)||(cd == day && cs > start)){
+    mem->time = time;
+    time->next = curr;
+    return;
+  }
+  for(; curr->next != NULL; curr = curr->next){
+    if (curr->next->day > day) break;
+    if (curr->next->day == day && curr->next->start_time > start) break;
+  }
+  tmp = curr->next;
+  curr->next = time;
+  time->next = tmp;
+  return;
 }
 
 int start_time_to_index(int n){
@@ -314,4 +335,62 @@ void assign_table(agenda * day, slot* slot, mem * list){
     }
   }
   return;  
+}
+
+void file_print_readfile(slot * time, mem * list){
+  // mem * output = (mem*)malloc(slot_list_size * sizeof(mem));
+  // char* name[mem_list_size];
+  // int i, j, k = 0;
+  // for (i = 0; i < 7; i++){
+  //   for (j = 0; j < 28; j++){
+  //     if (array[i].time[j] == '-----') continue;
+
+  //   }
+  // }
+  int match[mem_list_size][slot_list_size];
+  int i = 0, j, k = 0;
+  
+  for(j = 0; j < slot_list_size; j++){
+    for(k = 0; k < slot_list_size; k++){
+      if(match[(time+j)->filled-1][k] == 0){
+        match[(time+j)->filled-1][k] = j + 1;
+        break;
+      }
+    }      
+  }
+  for(j = 0; j < mem_list_size; j++){
+    if(match[i][0] != 0) i++;
+  }
+
+  FILE * fp = fopen("output_readable.txt", "w");
+  fprintf(fp,"%d\n", i);
+  for(i = 0; i < mem_list_size; i++){
+    j = 0;
+    if(match[i][0] != 0){
+      fprintf(fp, "N %s\n", list[i].name);
+      while(match[i][j]!=0){
+        fprintf(fp, "T %d %d %d\n", time[match[i][j]-1].time->day, time[match[i][j]-1].time->start_time, time[match[i][j]-1].time->end_time);
+      }
+    }
+  }
+  fclose(fp);
+}
+
+void find_common_time(agenda * day, mem * list){
+  period * curr;
+  int i, j, day_, start, end;
+  for(i = 0; i < mem_list_size; i++){
+    for(curr = (list+i)->time; curr != NULL; curr = curr->next){
+      start = start_time_to_index(curr->start_time);
+      end = end_time_to_index(curr->end_time);
+      day_ = curr->day;
+      for(j = 0; j < start; j++){
+        strcpy(day[day_].time[j], "XXXXX");
+      }
+      for(j = end + 1; j < 28; j++){
+        strcpy(day[day_].time[j], "XXXXX");
+      }
+    }
+  }
+  return;
 }

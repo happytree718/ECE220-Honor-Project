@@ -1,6 +1,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "print.h"
+# include "io.h"
 
 
 void print_table( agenda *array){
@@ -93,3 +94,4 @@ void line(){
 void fence(){
   printf("|");
 }
+

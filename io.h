@@ -44,3 +44,7 @@ void find_match_member(slot * slot, mem * list);
 int check_possible_schedule(slot * slot);
 int GenerateSchedule(slot * slot, int * nth, mem * member);
 void assign_table(agenda * day, slot * slot, mem * list);
+
+void insert(mem * mem, period * time);
+void find_common_time(agenda * day, mem * list);
+void file_print_readfile(slot * time, mem * list);

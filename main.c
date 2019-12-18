@@ -58,69 +58,119 @@ int main(){
   slot * time;
   char filename[30];
   while(option != 1 && option != 2){
-    printf("Please choose the way to input data :\n");
-    printf("1: stdin; 2: file input\n");
+    printf("You want to:\n");
+    printf("1: generate schedule; 2: find common meeting time\n");
     scanf("%d", &option);
     if (option == 1){
-      list = member_input();
-      time = timeslot_input();
-    }else if (option == 2){
-      printf("WELCOME TO THE SCHEDULE GENERATOR!");
-      printf("Please make sure the file is in correct format(similar to the example below)\n");
-      printf("2\nN Alex\nT 0 1300 1500\nT 2 0800 0930\nN Beta\nT 3 1530 1640\n");
-      printf("3\n0 1200 1400 1\n2 0824 1322 3\n5 0930 1030 1\n");
-      printf("Please enter the name of the file you want to load member data:\n");
-      scanf("%s", filename);
-      list = file_member_input(filename);
-      printf("Please enter the name of the file you want to load time slot data\n:");
-      scanf("%s", filename);
-      time = file_timeslot_input(filename);
+      option = 0;
+      while(option != 1 && option != 2){
+        printf("Please choose the way to input data :\n");
+        printf("1: stdin; 2: file input\n");
+        scanf("%d", &option);
+        if (option == 1){
+          list = member_input();
+          time = timeslot_input();
+        }else if (option == 2){
+          printf("WELCOME TO THE SCHEDULE GENERATOR!");
+          printf("Please make sure the file is in correct format(similar to the example below)\n");
+          printf("2\nN Alex\nT 0 1300 1500\nT 2 0800 0930\nN Beta\nT 3 1530 1640\n");
+          printf("3\n0 1200 1400 1\n2 0824 1322 3\n5 0930 1030 1\n");
+          printf("Please enter the name of the file you want to load member data:\n");
+          scanf("%s", filename);
+          list = file_member_input(filename);
+          printf("Please enter the name of the file you want to load time slot data\n:");
+          scanf("%s", filename);
+          time = file_timeslot_input(filename);
+        }else{
+          printf("Invalid choice.\n");
+        }
+      }
+      while (1){
+        printf("\nEnter the operation you want to conduct:\n");
+        printf("0: Halt the program;\n1: Exhibit loaded input;\n2: Generate Schedule(stored in \"output_table.txt\");\n3: Print generated table;\n");
+        scanf("%d", &option);
+        switch(option){
+          case 0:
+            destroy_mem_list(list);
+            destroy_slot_list(time);
+            destroy_table(day);
+            printf("\nThe program ends.Thanks for using!\n\n");
+            return 0;
+            break;
+          case 1:
+            printf("Summarize input info:\n");
+            print_mem_list(list);
+            print_slot_list(time);
+            break;
+          case 2:
+            find_match_member(time, list);
+            int nth = 0;
+            if (check_possible_schedule(time) && GenerateSchedule(time, &nth, list)){
+            printf("Generating schedule...\n");
+            //if (GenerateSchedule(time, &nth, list))
+            assign_table(day, time, list);
+            file_print_table(day);
+            flag = 1;
+            }else{
+              printf("Sorry, it is impossible to generate the schedule based on the given information.\n");
+            }
+            break;
+          case 3:
+            if(flag == 1)
+              print_table(day);
+            else
+              printf("Please generate table first.\n");
+            break;
+          default:
+            printf("Invalid choice.\n");
+            break;
+        }
+      }
+    }else if(option == 2){
+      option = 0;
+      while(option != 1 && option != 2){
+        printf("Please choose the way to input data :\n");
+        printf("1: stdin; 2: file input\n");
+        scanf("%d", &option);
+        if (option == 1){
+          list = member_input();
+        }else if(option == 2){
+          printf("Please enter the name of the file you want to load member data:\n");
+          scanf("%s", filename);
+          list = file_member_input(filename);
+        }else{
+          printf("Invalid choice.\n");
+        }
+      }
+      find_common_time(day,list);
+      file_print_table(day);
+      while (1){
+        printf("\nEnter the operation you want to conduct:\n");
+        printf("0: Halt the program;\n1: Exhibit loaded input;\n2: Print all common time table;\n");
+        scanf("%d", &option);
+        switch(option){
+          case 0:
+            destroy_mem_list(list);
+            destroy_table(day);
+            printf("\nThe program ends.Thanks for using!\n\n");
+            return 0;
+            break;
+          case 1:
+            printf("Summarize input info:\n");
+            print_mem_list(list);
+            break;
+          case 2:
+            print_table(day);
+            break;
+          default:
+            printf("Invalid choice.\n");
+            break;
+        }
+      }
     }else{
       printf("Invalid choice.\n");
     }
   }
-  while (1){
-    printf("\nEnter the operation you want to conduct:\n");
-    printf("0: Halt the program;\n1: Exhibit loaded input;\n2: Generate Schedule(stored in \"output_table.txt\");\n3: Print generated table;\n");
-    scanf("%d", &option);
-    switch(option){
-      case 0:
-        destroy_mem_list(list);
-        destroy_slot_list(time);
-        destroy_table(day);
-        printf("\nThe program ends.Thanks for using!\n\n");
-        return 0;
-        break;
-      case 1:
-        printf("Summarize input info:\n");
-        print_mem_list(list);
-        print_slot_list(time);
-        break;
-      case 2:
-        find_match_member(time, list);
-        int nth = 0;
-        if (check_possible_schedule(time) && GenerateSchedule(time, &nth, list)){
-        printf("Generating schedule...\n");
-        //if (GenerateSchedule(time, &nth, list))
-        assign_table(day, time, list);
-        file_print_table(day);
-        flag = 1;
-        }else{
-          printf("Sorry, it is impossible to generate the schedule based on the given information.\n");
-        }
-        break;
-      case 3:
-        if(flag == 1)
-          print_table(day);
-        else
-          printf("Please generate table first.\n");
-        break;
-      default:
-        printf("Invalid choice.\n");
-        break;
-    }
-  }
-
 
 
   // for (m = 0; m < a; m++){
