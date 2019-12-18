@@ -110,6 +110,7 @@ int main(){
             //if (GenerateSchedule(time, &nth, list))
             assign_table(day, time, list);
             file_print_table(day);
+            file_print_readfile(time, list);
             flag = 1;
             }else{
               printf("Sorry, it is impossible to generate the schedule based on the given information.\n");

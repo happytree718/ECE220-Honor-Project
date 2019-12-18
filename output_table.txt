@@ -2,59 +2,59 @@ Generated Schedule:
 -----------------------------------------------------------------------------------------
 | time\day |    Sunday|    Monday|   Tuesday| Wednesday|  Thursday|    Friday|  Saturday|
 -----------------------------------------------------------------------------------------
-|   8: 00  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|   8: 00  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|   8: 30  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|   8: 30  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|   9: 00  |Not available|     -----|Not available|Not available|Not available|Not available|Not available|
+|   9: 00  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|   9: 30  |Not available|     -----|Not available|Not available|Not available|Not available|Not available|
+|   9: 30  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  10: 00  |Not available|     -----|     -----|Not available|Not available|Not available|Not available|
+|  10: 00  |     -----|     -----|     Delta|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  10: 30  |Not available|Not available|     -----|Not available|Not available|Not available|Not available|
+|  10: 30  |     -----|     -----|     Delta|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  11: 00  |Not available|Not available|     -----|Not available|     -----|Not available|Not available|
+|  11: 00  |     -----|     -----|     Delta|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  11: 30  |Not available|Not available|     -----|Not available|     -----|Not available|Not available|
+|  11: 30  |     -----|     -----|     Delta|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  12: 00  |Not available|Not available|     -----|Not available|     -----|Not available|Not available|
+|  12: 00  |     -----|     -----|     Delta|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  12: 30  |Not available|Not available|     -----|Not available|     -----|Not available|Not available|
+|  12: 30  |     -----|     -----|     Delta|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  13: 00  |     -----|Not available|     -----|Not available|     -----|     -----|Not available|
+|  13: 00  |     Aaron|     -----|     Delta|     -----|     -----|       Elf|     -----|
 -----------------------------------------------------------------------------------------
-|  13: 30  |     -----|Not available|     -----|Not available|     -----|     -----|Not available|
+|  13: 30  |     Aaron|     -----|     Delta|     -----|     -----|       Elf|     -----|
 -----------------------------------------------------------------------------------------
-|  14: 00  |     -----|Not available|     -----|     -----|Not available|Not available|     -----|
+|  14: 00  |     -----|     -----|     Delta|    Carlin|     -----|     -----|      Beta|
 -----------------------------------------------------------------------------------------
-|  14: 30  |     -----|Not available|     -----|     -----|Not available|Not available|     -----|
+|  14: 30  |     -----|     -----|     Delta|    Carlin|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  15: 00  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  15: 00  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  15: 30  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  15: 30  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  16: 00  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  16: 00  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  16: 30  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  16: 30  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  17: 00  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  17: 00  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  17: 30  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  17: 30  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  18: 00  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  18: 00  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  18: 30  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  18: 30  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  19: 00  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  19: 00  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  19: 30  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  19: 30  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  20: 00  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  20: 00  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  20: 30  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  20: 30  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  21: 00  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  21: 00  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------
-|  21: 30  |Not available|Not available|Not available|Not available|Not available|Not available|Not available|
+|  21: 30  |     -----|     -----|     -----|     -----|     -----|     -----|     -----|
 -----------------------------------------------------------------------------------------

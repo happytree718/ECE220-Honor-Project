@@ -120,7 +120,7 @@ slot * file_timeslot_input(char* file){
   FILE * fp = fopen(file, "r");
   printf("Loading %s ...\n", file);
   //printf("IN file\n");
-  int i;
+  int i, j;
   //period * timeslot;
   fscanf(fp, "%d\n", &slot_list_size);
   //printf("Line92 %d\n",size);
@@ -139,6 +139,9 @@ slot * file_timeslot_input(char* file){
     //printf("%d %d %d %d\n", ((slotList+i)->time->day), ((slotList+i)->time->start_time),
     //((slotList+i)->time->end_time), ((slotList+i)->num_member));
     (slotList+i)->filled = 0;
+    for(j = 0; j < 50; j++){
+      (slotList+i)->fit_index[j] = 0;
+    }
   }
   printf("Loading complete.\n");
   fclose(fp);
@@ -349,6 +352,12 @@ void file_print_readfile(slot * time, mem * list){
   // }
   int match[mem_list_size][slot_list_size];
   int i = 0, j, k = 0;
+  for(i = 0; i < mem_list_size; i++){
+    for(j = 0; j< slot_list_size; j++){
+      match[i][j] = 0;
+    }
+  } 
+  
   
   for(j = 0; j < slot_list_size; j++){
     for(k = 0; k < slot_list_size; k++){
@@ -358,8 +367,16 @@ void file_print_readfile(slot * time, mem * list){
       }
     }      
   }
+  // for(i = 0; i < mem_list_size; i++){
+  //   for(j = 0; j< slot_list_size; j++){
+  //     printf("%d  ", match[i][j]);
+  //   }
+  //   printf("\n");
+  // } 
+
+  i = 0;
   for(j = 0; j < mem_list_size; j++){
-    if(match[i][0] != 0) i++;
+    if(match[j][0] != 0) i++;
   }
 
   FILE * fp = fopen("output_readable.txt", "w");
@@ -368,8 +385,10 @@ void file_print_readfile(slot * time, mem * list){
     j = 0;
     if(match[i][0] != 0){
       fprintf(fp, "N %s\n", list[i].name);
-      while(match[i][j]!=0){
-        fprintf(fp, "T %d %d %d\n", time[match[i][j]-1].time->day, time[match[i][j]-1].time->start_time, time[match[i][j]-1].time->end_time);
+      while(match[i][j]>0 && match[i][j] <= slot_list_size){
+        //printf("%d\n\n", match[i][j]);
+        fprintf(fp, "T %d %d %d\n", (time+match[i][j]-1)->time->day, (time[match[i][j]-1].time)->start_time, (time[match[i][j]-1].time)->end_time);
+        j++;
       }
     }
   }
