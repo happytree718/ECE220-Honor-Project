@@ -25,6 +25,7 @@ mem * member_input(){
       if(m == -1) break;
       printf("Name:\n");
       scanf("%s", (list+i)->name);
+      (list+i)->availability = (slot_list_size+mem_list_size-1)/mem_list_size;
     }else if (type == 'T'){
       printf("Available time slot detail:\n");
       time = (period *)malloc(sizeof(period));
@@ -90,7 +91,7 @@ mem * file_member_input(char* file){
     fscanf(fp, "%s\n", (member+i)->name);
     //printf("line 65 %s\n", (member+i)->name);
     (member+i)->time = NULL;
-    (member+i)->availability = 1;
+    (member+i)->availability = (slot_list_size+mem_list_size-1)/mem_list_size;;
     (member+i)->index = i;
     fscanf(fp, "%c ", &firstChar);
     //printf("line 69 %c\n", firstChar);
@@ -403,12 +404,12 @@ void find_common_time(agenda * day, mem * list){
       start = start_time_to_index(curr->start_time);
       end = end_time_to_index(curr->end_time);
       day_ = curr->day;
-      for(j = 0; j < start; j++){
+      for(j = start; j < end + 1; j++){
         strcpy(day[day_].time[j], "XXXXX");
       }
-      for(j = end + 1; j < 28; j++){
-        strcpy(day[day_].time[j], "XXXXX");
-      }
+      // for(j = end + 1; j < 28; j++){
+      //   strcpy(day[day_].time[j], "XXXXX");
+      // }
     }
   }
   return;
