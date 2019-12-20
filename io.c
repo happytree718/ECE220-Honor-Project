@@ -72,7 +72,7 @@ slot * timeslot_input(){
 
 
 /*
- * This function reads members' availability from file, 
+ * This function reads members' availability from file,
  * Returns the pointer to an array of mem struct
  */
 mem * file_member_input(char* file){
@@ -113,7 +113,7 @@ mem * file_member_input(char* file){
 
 
 /*
- * This function reads time slots from file, 
+ * This function reads time slots from file,
  * Returns the pointer to an array of slots
  */
 slot * file_timeslot_input(char* file){
@@ -247,7 +247,7 @@ void destroy_slot_list(slot * ptr){
 
 /*
  * This function finds all matched members for every timeslot
- * and stores in fit_index with (index number +1) so that 
+ * and stores in fit_index with (index number +1) so that
  * we avoid ambuguity between 0 index and no fit.
  */
 void find_match_member(slot * slot, mem * list){
@@ -276,7 +276,7 @@ void find_match_member(slot * slot, mem * list){
   }
 }
 
-/* 
+/*
  * This function checks whether it is possible to generate a schedule
  * by checking if each timeslot has some matched members
  * Return 0 is impossible to generate a schedule, 1 otherwise
@@ -289,34 +289,34 @@ int check_possible_schedule(slot * slot){
 }
 
 /*
- * This function uses back-tracking recursion to match each 
- * time slot with a member. 
+ * This function uses back-tracking recursion to match each
+ * time slot with a member.
  */
 int GenerateSchedule(slot * slot, int * nth, mem * member){
   int i = 0;
   if (*nth >= slot_list_size) return 0;
   for (; slot->fit_index[i] != 0; i++){
     //printf("%d out:%d\n",*nth, i);
-    if (member[(slot->fit_index[i]-1)].availability == 1){
+    if (member[(slot->fit_index[i]-1)].availability > 0){
       //printf("%d %d\n", *nth, slot->fit_index[i]);
       slot->filled = slot->fit_index[i];
-      member[(slot->fit_index[i]-1)].availability = 0;
+      member[(slot->fit_index[i]-1)].availability--;
        // base case
       if (*nth == slot_list_size-1) return 1;
       // recursive case
       *nth = *nth + 1;
-      if (GenerateSchedule(slot+1, nth, member)){ 
+      if (GenerateSchedule(slot+1, nth, member)){
         //printf("%d %dworked\n", *nth, slot->fit_index[i]);
         return 1;
       }else{
         //printf("%d %dfailed\n", *nth, slot->fit_index[i]);
         slot->filled = 0;
-        *nth = *nth - 1;  
+        *nth = *nth - 1;
         member[(slot->fit_index[i]-1)].availability = 1;
       }
     }
   }
-  return 0; 
+  return 0;
 }
 
 void assign_table(agenda * day, slot* slot, mem * list){
@@ -338,7 +338,7 @@ void assign_table(agenda * day, slot* slot, mem * list){
       //printf("%s\n", day[day_].time[j]);
     }
   }
-  return;  
+  return;
 }
 
 void file_print_readfile(slot * time, mem * list){
@@ -357,23 +357,23 @@ void file_print_readfile(slot * time, mem * list){
     for(j = 0; j< slot_list_size; j++){
       match[i][j] = 0;
     }
-  } 
-  
-  
+  }
+
+
   for(j = 0; j < slot_list_size; j++){
     for(k = 0; k < slot_list_size; k++){
       if(match[(time+j)->filled-1][k] == 0){
         match[(time+j)->filled-1][k] = j + 1;
         break;
       }
-    }      
+    }
   }
   // for(i = 0; i < mem_list_size; i++){
   //   for(j = 0; j< slot_list_size; j++){
   //     printf("%d  ", match[i][j]);
   //   }
   //   printf("\n");
-  // } 
+  // }
 
   i = 0;
   for(j = 0; j < mem_list_size; j++){
@@ -394,6 +394,7 @@ void file_print_readfile(slot * time, mem * list){
     }
   }
   fclose(fp);
+  printf("Generated result is stored in \"output_readable.txt\"\n");
 }
 
 void find_common_time(agenda * day, mem * list){
