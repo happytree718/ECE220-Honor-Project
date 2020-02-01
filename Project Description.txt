@@ -1,0 +1,8 @@
+The program would work in the following way:
+First, we set the time slots that needs to be filled and specify extra requirements 
+(such as number of workers required for each slot, the number of times a worker needs to work, etc.) 
+Then, we want to have input from members for their names and their availability.  
+The scheduler will generate one or more possible solutions. 
+If no possible schedule exists, which means there would always be some time slots
+that could not match with any worker’s availability, there will also be a warning 
+notification printed above the schedule saying “No Complete Schedule Possible”.
